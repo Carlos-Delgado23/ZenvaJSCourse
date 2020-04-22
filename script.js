@@ -25,9 +25,18 @@ function gameCharacter (name, xPos, health) {
     this.move = function (x) {
         this.xPos += x;
     }
-    this.class = "Human";
 }
 
 var gc1 = new gameCharacter("Nimish", 0, 100);
+
 var gc2 = new gameCharacter("Zenva", 5, 150);
+
+gameCharacter.prototype.this.class = "Human";
+
+
+var heal = function(amount) {
+    this.health += amount;
+}
+
+gameCharacter.prototype.heal = heal;
 
