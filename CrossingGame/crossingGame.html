@@ -64,7 +64,7 @@
 
       var player = new GameCharacter(
         50,
-        225,
+        200,
         width,
         width,
         "rgb(0, 255, 0)",
@@ -80,6 +80,21 @@
         0
       );
 
+      var sprites = {};
+      var loadSprites = function () {
+        sprites.player = new Image();
+        sprites.player.src = "img/hero.png";
+
+        sprites.background = new Image();
+        sprites.background.src = "img/floor.png";
+
+        sprites.enemy = new Image();
+        sprites.enemy.src = "img/enemy.png";
+
+        sprites.goal = new Image();
+        sprites.goal.src = "img/chest.png";
+      };
+
       document.onkeydown = function (event) {
         let keyPressed = event.keyCode;
         if (keyPressed == 39) {
@@ -90,7 +105,10 @@
         }
       };
       document.onkeyup = function (event) {
-        player.speed = 0;
+        var keyPressed = event.keyCode;
+        if (keyPressed == 39 || keyPressed == 37) {
+          player.speed = 0;
+        }
       };
 
       var checkCollisions = function (rect1, rect2) {
@@ -104,15 +122,12 @@
       var draw = function () {
         ctx.clearRect(0, 0, screenWidth, screenHeight);
 
-        ctx.fillStyle = player.color;
-        ctx.fillRect(player.x, player.y, width, width);
-
-        ctx.fillStyle = goal.color;
-        ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
+        ctx.drawImage(sprites.background, 0, 0);
+        ctx.drawImage(sprites.player, player.x, player.y);
+        ctx.drawImage(sprites.goal, goal.x, goal.y);
 
         enemies.forEach(function (element) {
-          ctx.fillStyle = element.color;
-          ctx.fillRect(element.x, element.y, element.width, element.width);
+          ctx.drawImage(sprites.enemy, element.x, element.y);
         });
       };
 
@@ -145,6 +160,7 @@
         }
       };
 
+      loadSprites();
       step();
     </script>
   </body>
